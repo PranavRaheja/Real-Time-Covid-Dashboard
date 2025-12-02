@@ -1,6 +1,0 @@
-Flask
-covid
-matplotlib
-numpy
-flask-caching
-python-dotenv
