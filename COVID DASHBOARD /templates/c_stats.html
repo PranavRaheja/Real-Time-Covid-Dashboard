@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="COVID-19 statistics for {{ country_data.country }}">
+    <title>{{ country_data.country }} COVID Statistics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦠</text></svg>">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <nav aria-label="Breadcrumb navigation">
+            <a href="/" class="btn" aria-label="Back to homepage">← Home</a>
+            <a href="/regional" class="btn btn-secondary" aria-label="View regional analysis">Regional Analysis</a>
+            <a href="/search" class="btn btn-secondary" aria-label="Search another country">Search</a>
+            <button class="btn btn-secondary print-btn" onclick="window.print()" aria-label="Print this page">Print</button>
+        </nav>
+        
+        <main id="main-content" tabindex="-1">
+            <h1>COVID Statistics: {{ country_data.country }}</h1>
+            
+            <div class="export-options">
+                <a href="/export/{{ country_data.country|lower }}/csv" class="btn btn-success export-btn" aria-label="Download data as CSV">
+                    📊 CSV Export
+                </a>
+                <a href="/export/{{ country_data.country|lower }}/json" class="btn btn-info export-btn" aria-label="Download data as JSON">
+                    📈 JSON Export
+                </a>
+            </div>
+            
+            <div class="chart-container" role="img" aria-label="COVID-19 statistics donut chart for {{ country_data.country }}">
+                <img src="data:image/png;base64,{{ chart_image }}" 
+                     alt="COVID-19 Statistics Donut Chart for {{ country_data.country }} showing active, critical, deaths, and recovered cases">
+            </div>
+            
+            <div class="data-summary">
+                <div class="country-data">
+                    <h3>Key Statistics</h3>
+                    <p><strong>Confirmed Cases:</strong> {{ "{:,}".format(country_data.confirmed) }}</p>
+                    <p><strong>Active Cases:</strong> {{ "{:,}".format(country_data.active) }}</p>
+                    <p><strong>Critical Cases:</strong> {{ "{:,}".format(country_data.critical) }}</p>
+                    <p><strong>Deaths:</strong> {{ "{:,}".format(country_data.deaths) }}</p>
+                    <p><strong>Recovered:</strong> {{ "{:,}".format(country_data.recovered) }}</p>
+                </div>
+                <div class="country-data">
+                    <h3>Daily Updates</h3>
+                    <p><strong>New Cases Today:</strong> {{ "{:,}".format(country_data.new_cases) }}</p>
+                    <p><strong>New Deaths Today:</strong> {{ "{:,}".format(country_data.new_deaths) }}</p>
+                    <p><strong>Total Tests:</strong> {{ "{:,}".format(country_data.total_tests) }}</p>
+                </div>
+                <div class="country-data">
+                    <h3>Per Million Rates</h3>
+                    <p><strong>Cases per Million:</strong> {{ "{:,.2f}".format(country_data.total_cases_per_million) }}</p>
+                    <p><strong>Deaths per Million:</strong> {{ "{:,.2f}".format(country_data.total_deaths_per_million) }}</p>
+                    <p><strong>Tests per Million:</strong> {{ "{:,.2f}".format(country_data.total_tests_per_million) }}</p>
+                </div>
+            </div>
+            
+            <div class="alert alert-info">
+                <strong>Note:</strong> Data is cached and updated every 5 minutes. Last data refresh may vary by source.
+            </div>
+        </main>
+        
+        <footer>
+            <p>Data Source: <a href="https://www.worldometers.info/coronavirus/" target="_blank" rel="noopener noreferrer">Worldometers</a></p>
+            <p>Last Updated: {{ now.strftime('%Y-%m-%d %H:%M:%S') if now else 'N/A' }}</p>
+        </footer>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

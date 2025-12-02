@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Regional COVID-19 statistics comparison">
+    <title>Regional COVID-19 Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦠</text></svg>">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <nav aria-label="Breadcrumb navigation">
+            <a href="/" class="btn" aria-label="Back to homepage">← Home</a>
+            <a href="/search" class="btn btn-secondary" aria-label="Search country">Search</a>
+            <button class="btn btn-secondary print-btn" onclick="window.print()" aria-label="Print this page">Print</button>
+        </nav>
+        
+        <main id="main-content" tabindex="-1">
+            <h1>Regional COVID-19 Analysis</h1>
+            
+            <div class="chart-container" role="img" aria-label="COVID-19 regional comparison bar chart showing confirmed, deaths, and recovered cases across six regions">
+                <img src="data:image/png;base64,{{ chart_image }}" 
+                     alt="COVID-19 Regional Comparison Bar Chart showing statistics for North America, Asia, Europe, South America, Oceania, and Africa">
+            </div>
+            
+            <div class="data-summary">
+                <div class="country-data">
+                    <h3>{{ countries[0] }}</h3>
+                    <p><strong>Confirmed Cases:</strong> {{ "{:,}".format(n_america_data.confirmed) }}</p>
+                    <p><strong>Deaths:</strong> {{ "{:,}".format(n_america_data.deaths) }}</p>
+                    <p><strong>Recovered:</strong> {{ "{:,}".format(n_america_data.recovered) }}</p>
+                    <p><strong>Active Cases:</strong> {{ "{:,}".format(n_america_data.active) }}</p>
+                </div>
+                <div class="country-data">
+                    <h3>{{ countries[1] }}</h3>
+                    <p><strong>Confirmed Cases:</strong> {{ "{:,}".format(asia_data.confirmed) }}</p>
+                    <p><strong>Deaths:</strong> {{ "{:,}".format(asia_data.deaths) }}</p>
+                    <p><strong>Recovered:</strong> {{ "{:,}".format(asia_data.recovered) }}</p>
+                    <p><strong>Active Cases:</strong> {{ "{:,}".format(asia_data.active) }}</p>
+                </div>
+                <div class="country-data">
+                    <h3>{{ countries[2] }}</h3>
+                    <p><strong>Confirmed Cases:</strong> {{ "{:,}".format(eu_data.confirmed) }}</p>
+                    <p><strong>Deaths:</strong> {{ "{:,}".format(eu_data.deaths) }}</p>
+                    <p><strong>Recovered:</strong> {{ "{:,}".format(eu_data.recovered) }}</p>
+                    <p><strong>Active Cases:</strong> {{ "{:,}".format(eu_data.active) }}</p>
+                </div>
+                <div class="country-data">
+                    <h3>{{ countries[3] }}</h3>
+                    <p><strong>Confirmed Cases:</strong> {{ "{:,}".format(s_america_data.confirmed) }}</p>
+                    <p><strong>Deaths:</strong> {{ "{:,}".format(s_america_data.deaths) }}</p>
+                    <p><strong>Recovered:</strong> {{ "{:,}".format(s_america_data.recovered) }}</p>
+                    <p><strong>Active Cases:</strong> {{ "{:,}".format(s_america_data.active) }}</p>
+                </div>
+                <div class="country-data">
+                    <h3>{{ countries[4] }}</h3>
+                    <p><strong>Confirmed Cases:</strong> {{ "{:,}".format(oceania_data.confirmed) }}</p>
+                    <p><strong>Deaths:</strong> {{ "{:,}".format(oceania_data.deaths) }}</p>
+                    <p><strong>Recovered:</strong> {{ "{:,}".format(oceania_data.recovered) }}</p>
+                    <p><strong>Active Cases:</strong> {{ "{:,}".format(oceania_data.active) }}</p>
+                </div>
+                <div class="country-data">
+                    <h3>{{ countries[5] }}</h3>
+                    <p><strong>Confirmed Cases:</strong> {{ "{:,}".format(africa_data.confirmed) }}</p>
+                    <p><strong>Deaths:</strong> {{ "{:,}".format(africa_data.deaths) }}</p>
+                    <p><strong>Recovered:</strong> {{ "{:,}".format(africa_data.recovered) }}</p>
+                    <p><strong>Active Cases:</strong> {{ "{:,}".format(africa_data.active) }}</p>
+                </div>
+            </div>
+            
+            <div class="alert alert-info">
+                <strong>Regional Data Note:</strong> This comparison shows aggregate data for entire regions. For specific country data, use the search feature.
+            </div>
+        </main>
+        
+        <footer>
+            <p>Data Source: <a href="https://www.worldometers.info/coronavirus/" target="_blank" rel="noopener noreferrer">Worldometers</a></p>
+            <p>Last Updated: {{ now.strftime('%Y-%m-%d %H:%M:%S') if now else 'N/A' }}</p>
+        </footer>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

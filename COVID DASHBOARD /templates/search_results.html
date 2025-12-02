@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results for "{{ search_term }}"</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦠</text></svg>">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <nav aria-label="Breadcrumb navigation">
+            <a href="/" class="btn" aria-label="Back to homepage">← Home</a>
+            <a href="/search" class="btn btn-secondary" aria-label="New search">New Search</a>
+        </nav>
+        
+        <main id="main-content" tabindex="-1">
+            <h1>Search Results for "{{ search_term }}"</h1>
+            
+            {% if countries %}
+            <div class="alert alert-success">
+                Found {{ countries|length }} matching countr{{ 'y' if countries|length == 1 else 'ies' }}
+            </div>
+            
+            <div class="results-grid" role="list">
+                {% for country in countries %}
+                <a href="/country/{{ country.name|lower }}" class="result-card" role="listitem" aria-label="View COVID statistics for {{ country.name }}">
+                    {{ country.name }}
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-danger">
+                No countries found matching "{{ search_term }}". Please try a different search term.
+                <br><br>
+                <strong>Suggestions:</strong>
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>Check spelling</li>
+                    <li>Try the country's official name</li>
+                    <li>Search by continent (e.g., "asia", "europe")</li>
+                    <li>Try "world" for global statistics</li>
+                </ul>
+            </div>
+            
+            <div class="center-text">
+                <a href="/search" class="btn">← Back to Search</a>
+                <a href="/regional" class="btn btn-secondary">View Regional Analysis</a>
+            </div>
+            {% endif %}
+        </main>
+        
+        <footer>
+            <p>Data Source: <a href="https://www.worldometers.info/coronavirus/" target="_blank" rel="noopener noreferrer">Worldometers</a></p>
+        </footer>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
