@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Search for COVID-19 statistics by country">
+    <title>Search COVID Statistics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦠</text></svg>">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <nav aria-label="Breadcrumb navigation">
+            <a href="/" class="btn" aria-label="Back to homepage">← Home</a>
+            <a href="/regional" class="btn btn-secondary" aria-label="View regional analysis">Regional Analysis</a>
+        </nav>
+        
+        <main id="main-content" tabindex="-1">
+            <h1>Search COVID Statistics</h1>
+            
+            {% if error %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+            {% endif %}
+            
+            <div class="search-container">
+                <form action="/search" method="POST" class="search-form" role="search">
+                    <input 
+                        type="text" 
+                        name="country_name" 
+                        placeholder="Enter country name (e.g., United States, India, Brazil)..." 
+                        class="search-input"
+                        aria-label="Search country by name"
+                        required
+                        autofocus
+                    >
+                    <button type="submit" class="btn search-btn">Search</button>
+                </form>
+            </div>
+            
+            <div class="center-text">
+                <h2>Popular Countries</h2>
+                <div class="routes-grid">
+                    <a href="/country/usa" class="route-card" aria-label="View USA COVID statistics">
+                        <div class="route-name">United States</div>
+                        <div class="route-description">View detailed COVID statistics for the USA</div>
+                    </a>
+                    <a href="/country/china" class="route-card" aria-label="View China COVID statistics">
+                        <div class="route-name">China</div>
+                        <div class="route-description">View detailed COVID statistics for China</div>
+                    </a>
+                    <a href="/country/india" class="route-card" aria-label="View India COVID statistics">
+                        <div class="route-name">India</div>
+                        <div class="route-description">View detailed COVID statistics for India</div>
+                    </a>
+                    <a href="/country/brazil" class="route-card" aria-label="View Brazil COVID statistics">
+                        <div class="route-name">Brazil</div>
+                        <div class="route-description">View detailed COVID statistics for Brazil</div>
+                    </a>
+                    <a href="/country/germany" class="route-card" aria-label="View Germany COVID statistics">
+                        <div class="route-name">Germany</div>
+                        <div class="route-description">View detailed COVID statistics for Germany</div>
+                    </a>
+                    <a href="/country/uk" class="route-card" aria-label="View UK COVID statistics">
+                        <div class="route-name">United Kingdom</div>
+                        <div class="route-description">View detailed COVID statistics for the UK</div>
+                    </a>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Data Source: <a href="https://www.worldometers.info/coronavirus/" target="_blank" rel="noopener noreferrer">Worldometers</a></p>
+            <p>Tip: Search is case-insensitive. Try full country names or partial matches.</p>
+        </footer>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

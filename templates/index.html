@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="COVID Statistics Dashboard - Track and compare COVID-19 statistics worldwide">
+    <title>COVID Statistics Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦠</text></svg>">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <nav aria-label="Main navigation">
+            <ul class="nav-links" role="menu">
+                <li role="none"><a href="/" role="menuitem" aria-current="page">Home</a></li>
+                <li role="none"><a href="/regional" role="menuitem">Regional Analysis</a></li>
+                <li role="none"><a href="/search" role="menuitem">Search</a></li>
+                <li role="none"><a href="/about" role="menuitem">About</a></li>
+            </ul>
+        </nav>
+        
+        <main id="main-content" tabindex="-1">
+            <h1>COVID Statistics Dashboard</h1>
+            
+            <div class="center-text">
+                <p>Welcome to our COVID Dashboard which includes multiple visual and non-visual statistics of different countries and comparisons between different countries to help you get a better idea of the impact of the COVID-19 pandemic. Statistics are sourced from Worldometers.</p>
+                <p><strong>Accessibility Tip:</strong> Use Alt+T to toggle dark mode, Alt+H to go home, Alt+S to search.</p>
+            </div>
+            
+            <div class="search-container">
+                <form action="/search" method="POST" class="search-form" role="search">
+                    <input 
+                        type="text" 
+                        name="country_name" 
+                        placeholder="Enter country name..." 
+                        class="search-input"
+                        aria-label="Search country"
+                        required
+                    >
+                    <button type="submit" class="btn search-btn">Search</button>
+                </form>
+            </div>
+            
+            <h2>Quick Access</h2>
+            <div class="routes-grid" role="list">
+                {% for route in routes %}
+                <a href="{{ route.path }}" class="route-card" role="listitem">
+                    <div class="route-name">{{ route.name }}</div>
+                    <div class="route-description">{{ route.description }}</div>
+                </a>
+                {% endfor %}
+            </div>
+        </main>
+        
+        <footer>
+            <p>Data Source: <a href="https://www.worldometers.info/coronavirus/" target="_blank" rel="noopener noreferrer">Worldometers</a></p>
+            <p>Last Updated: {{ now.strftime('%Y-%m-%d %H:%M:%S') if now else 'N/A' }}</p>
+            <p>© 2025 COVID Statistics Dashboard | <button class="btn btn-secondary print-btn" onclick="window.print()">Print Page</button></p>
+        </footer>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
